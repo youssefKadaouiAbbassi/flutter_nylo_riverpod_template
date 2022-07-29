@@ -1,17 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/models/auth/login_form.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../app/stores/auth_store.dart';
 import '../../../routes/router.gr.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends HookConsumerWidget {
   final Function(bool)? onLogin;
   LoginForm({Key? key, this.onLogin})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormBuilderState>();
 
     return Align(
@@ -93,7 +96,10 @@ class LoginForm extends StatelessWidget {
                         onPressed: () async {
                           bool validation = await _formKey.currentState?.validate() ?? false;
                           if(validation) {
-                            print(_formKey.currentState?.fields['email']?.value);
+                            login(ref, LoginFormModel(
+                              email: _formKey.currentState?.fields['email']?.value,
+                              password: _formKey.currentState?.fields['password']?.value,
+                            ), onLogin: onLogin);
                           }
                         },
                       )),

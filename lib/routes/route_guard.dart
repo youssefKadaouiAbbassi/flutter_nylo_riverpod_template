@@ -4,7 +4,7 @@ import 'package:flutter_app/routes/router.gr.dart';
 import '../app/models/user.dart';
 import '../app/networking/auth_api_service.dart';
 
-class AuthGuard extends AutoRouteGuard {
+class AuthGuard extends AutoRouteGuard  {
 
   AuthApiService userApiService = AuthApiService();
   bool guard = true;

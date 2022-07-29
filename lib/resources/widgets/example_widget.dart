@@ -6,7 +6,7 @@ import '../../app/stores/main_store.dart';
 class Example extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(mainStore.state).state;
+    final state = ref.watch(mainStore);
     return Column(
       children: [
         Text(state.text),

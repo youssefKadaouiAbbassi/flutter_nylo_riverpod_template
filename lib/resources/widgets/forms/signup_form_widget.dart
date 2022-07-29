@@ -1,17 +1,22 @@
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../app/models/auth/signup_form.dart';
+import '../../../app/stores/auth_store.dart';
 import '../../../routes/router.gr.dart';
 
-class SignupForm extends StatelessWidget {
+class SignupForm extends HookConsumerWidget {
   final Function(bool loggedIn)? onLogin;
 
   SignupForm({Key? key, this.onLogin}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormBuilderState>();
 
     return Align(
@@ -127,7 +132,9 @@ class SignupForm extends StatelessWidget {
                         FormBuilderValidators.required(),
                         FormBuilderValidators.minLength(8),
                         (value) {
-                        var password = _formKey.currentState?.fields['password']?.value ?? '';
+                          var password = _formKey
+                                  .currentState?.fields['password']?.value ??
+                              '';
                           if (value != password) {
                             return 'Passwords do not match';
                           }
@@ -154,8 +161,21 @@ class SignupForm extends StatelessWidget {
                           bool validation =
                               await _formKey.currentState?.validate() ?? false;
                           if (validation) {
-                            print(
-                                _formKey.currentState?.fields['email']?.value);
+                            signup(
+                                ref,
+                                SignupFormModel(
+                                    firstName: _formKey
+                                            .currentState?.fields['firstName']?.value ??
+                                        '',
+                                    lastName: _formKey
+                                            .currentState?.fields['lastName']?.value ??
+                                        '',
+                                    email:
+                                        _formKey.currentState?.fields['email']?.value ??
+                                            '',
+                                    password: _formKey
+                                            .currentState?.fields['password']?.value ??
+                                        ''), onLogin: onLogin);
                           }
                         },
                       )),
@@ -171,7 +191,8 @@ class SignupForm extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    AutoRouter.of(context).replace(LoginRoute(onLogin: onLogin));
+                    AutoRouter.of(context)
+                        .replace(LoginRoute(onLogin: onLogin));
                   },
                 )
               ],
