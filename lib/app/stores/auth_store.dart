@@ -1,6 +1,11 @@
+import 'dart:js';
+
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nylo_framework/nylo_framework.dart';
 
+import '../../routes/router.gr.dart';
 import '../models/access_token.dart';
 import '../models/auth/login_form.dart';
 import '../models/auth/signup_form.dart';
@@ -81,4 +86,10 @@ Future<void> signup(WidgetRef ref, SignupFormModel values,
   if (onLogin != null) {
     onLogin(true);
   }
+}
+void logout(BuildContext context, WidgetRef ref) async {
+  await NyStorage.delete("accessToken");
+  ref.read(authStore.notifier).changeState(AuthState(isAuthenticated: false, user: null));
+  AutoRouter.of(context).pop();
+  AutoRouter.of(context).replace(MyHomeRoute());
 }

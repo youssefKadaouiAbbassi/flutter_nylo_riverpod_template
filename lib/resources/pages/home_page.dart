@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/resources/widgets/logout_button_widget.dart';
 import '../../app/controllers/home_controller.dart';
 import '../../bootstrap/helpers.dart';
 import '../../resources/widgets/safearea_widget.dart';
@@ -136,6 +137,7 @@ class _MyHomePageState extends NyState<MyHomePage> {
                         setState(() {});
                       }),
                   Text("${_darkMode == true ? "Dark" : "Light"} Mode"),
+                  LogoutButton(),
                 ],
               ),
             ],
