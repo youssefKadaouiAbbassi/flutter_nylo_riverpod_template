@@ -109,7 +109,7 @@ class LoginForm extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    AutoRouter.of(context).push(SignupRoute(onLogin: onLogin));
+                    AutoRouter.of(context).replace(SignupRoute(onLogin: onLogin));
                   },
                 )
               ],
