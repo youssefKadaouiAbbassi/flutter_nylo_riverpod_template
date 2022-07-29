@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:nylo_framework/nylo_framework.dart';
-import '../widgets/forms/login_form_widget.dart';
+import '../widgets/forms/signup_form_widget.dart';
 
-class LoginPage extends NyStatefulWidget {
+class SignupPage extends NyStatefulWidget {
   final Function(bool loggedIn)? onLogin;
 
-  LoginPage({this.onLogin});
+  SignupPage({this.onLogin});
   
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends NyState<LoginPage> {
+class _LoginPageState extends NyState<SignupPage> {
 
   @override
   init() async {
@@ -31,7 +31,7 @@ class _LoginPageState extends NyState<LoginPage> {
       ),
       body: SafeArea(
          child: Container(
-           child: LoginForm(onLogin: widget.onLogin),
+           child: SignupForm(onLogin: widget.onLogin),
          ),
       ),
     );

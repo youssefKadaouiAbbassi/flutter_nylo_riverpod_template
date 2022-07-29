@@ -5,10 +5,10 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../../routes/router.gr.dart';
 
-class LoginForm extends StatelessWidget {
-  final Function(bool)? onLogin;
-  LoginForm({Key? key, this.onLogin})
-      : super(key: key);
+class SignupForm extends StatelessWidget {
+  final Function(bool loggedIn)? onLogin;
+
+  SignupForm({Key? key, this.onLogin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +34,58 @@ class LoginForm extends StatelessWidget {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  'Sign in',
+                  'Sign up',
                   style: TextStyle(fontSize: 20),
                 )),
             Container(
                 child: FormBuilder(
               key: _formKey,
               initialValue: {
+                'firstName': '',
+                'lastName': '',
                 'email': '',
                 'password': '',
+                'confirmPassword': '',
               },
               child: Column(
                 children: [
+                  Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              child: FormBuilderTextField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'First name',
+                                ),
+                                name: 'firstName',
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(),
+                                  FormBuilderValidators.minLength(3),
+                                ]),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Container(
+                              child: FormBuilderTextField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Last name',
+                                ),
+                                name: 'lastName',
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(),
+                                  FormBuilderValidators.minLength(3),
+                                ]),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: FormBuilderTextField(
@@ -58,8 +98,6 @@ class LoginForm extends StatelessWidget {
                         FormBuilderValidators.required(),
                         FormBuilderValidators.email(),
                       ]),
-                      onChanged: (val) {
-                      },
                     ),
                   ),
                   Container(
@@ -77,6 +115,28 @@ class LoginForm extends StatelessWidget {
                       name: 'password',
                     ),
                   ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: FormBuilderTextField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Confirm password',
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.minLength(8),
+                        (value) {
+                        var password = _formKey.currentState?.fields['password']?.value ?? '';
+                          if (value != password) {
+                            return 'Passwords do not match';
+                          }
+                          return null;
+                        },
+                      ]),
+                      name: 'confirmPassword',
+                    ),
+                  ),
                   TextButton(
                     onPressed: () {
                       //forgot password screen
@@ -89,11 +149,13 @@ class LoginForm extends StatelessWidget {
                       height: 50,
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: ElevatedButton(
-                        child: const Text('Login'),
+                        child: const Text('sign up'),
                         onPressed: () async {
-                          bool validation = await _formKey.currentState?.validate() ?? false;
-                          if(validation) {
-                            print(_formKey.currentState?.fields['email']?.value);
+                          bool validation =
+                              await _formKey.currentState?.validate() ?? false;
+                          if (validation) {
+                            print(
+                                _formKey.currentState?.fields['email']?.value);
                           }
                         },
                       )),
@@ -105,11 +167,11 @@ class LoginForm extends StatelessWidget {
                 const Text('Does not have account?'),
                 TextButton(
                   child: const Text(
-                    'Sign up',
+                    'Sign in',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    AutoRouter.of(context).push(SignupRoute(onLogin: onLogin));
+                    AutoRouter.of(context).push(LoginRoute(onLogin: onLogin));
                   },
                 )
               ],
