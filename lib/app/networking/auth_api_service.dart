@@ -19,7 +19,7 @@ class AuthApiService extends BaseApiService {
     LoggingInterceptor: LoggingInterceptor()
   };
 
-  Future<AccessToken?> signIn(
+  Future<AccessToken?> logIn(
       {required String email, required String password}) async {
     return await network<AccessToken>(
       request: (request) => request
