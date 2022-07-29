@@ -29,7 +29,7 @@ class SignupForm extends HookConsumerWidget {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  'Stample',
+                  'Nylo',
                   style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.w500,
