@@ -35,7 +35,7 @@ class _LoginPageState extends NyState<SignupPage> {
       ),
       body: SafeArea(
          child: Container(
-           child: SignupForm(onLogin: widget.onLogin),
+           child: SingleChildScrollView(child: SignupForm(onLogin: widget.onLogin)),
          ),
       ),
     );
