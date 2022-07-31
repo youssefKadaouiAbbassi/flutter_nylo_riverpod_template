@@ -15,7 +15,9 @@
 ```
 ### Using Nylo features: [docs](https://nylo.dev/docs)
 
-### Using Riverpod features: [docs](https://riverpod.dev/docs)
+### Metro code generation: [docs](https://nylo.dev/docs/3.x/metro)
+
+### Using Riverpod_hooks features: [docs](https://riverpod.dev/docs)
 
 ### Using Auto_route for routes:
   - Start by adding your new route
