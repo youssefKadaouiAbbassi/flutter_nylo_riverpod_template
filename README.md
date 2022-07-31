@@ -1,11 +1,5 @@
 ![Nylo Banner](https://nylo.dev/images/nylo_logo_header.png)
 
-<p align="center">
-  <a href="https://github.com/nylo-core/nylo/releases"><img src="https://img.shields.io/github/v/release/nylo-core/nylo?style=plastic" alt="Latest Release Version"></a>
-  <a href="https://github.com/nylo-core/nylo/blob/master/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/nylo-core/nylo?style=plastic"></a>
-  <a href="#"><img alt="GitHub stars" src="https://img.shields.io/github/stars/nylo-core/nylo?style=plastic"></a>
-</p>
-
 ## Nylo Riverpod Template
 
 ### This is a template for anew flutter project with Nylo and Riverpod.

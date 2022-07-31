@@ -55,7 +55,6 @@ void login(WidgetRef ref, LoginFormModel values,
 
   ref.read(authStore.notifier).changeState(AuthState(isAuthenticated: true, user: user));
 
-  print(onLogin);
   if (onLogin != null) {
     onLogin(true);
   }

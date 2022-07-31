@@ -17,7 +17,6 @@ class _LoginPageState extends NyState<LoginPage> {
 
   @override
   init() async {
-    print('LoginPage init ${widget.onLogin}');
     if (widget.onLogin == null){
       AutoRouter.of(context).push(MyHomeRoute());
     }
