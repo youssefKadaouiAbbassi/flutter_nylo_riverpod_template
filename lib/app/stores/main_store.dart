@@ -16,6 +16,5 @@ class MainStateNotifier extends StateNotifier<MainState> {
 final mainStore = StateNotifierProvider<MainStateNotifier,MainState>((ref) => MainStateNotifier());
 
 void changeState(WidgetRef ref, String value) {
-  print(value);
   ref.read(mainStore.notifier).changeState(value);
 }

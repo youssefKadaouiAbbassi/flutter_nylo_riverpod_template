@@ -1,3 +1,4 @@
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/bootstrap/app.dart';
 import 'package:flutter_app/routes/route_guard.dart';
@@ -23,4 +24,11 @@ void main() async {
       debugShowCheckedModeBanner: false,
     ),
   ));
+
+  doWhenWindowReady(() {
+    //appWindow.maxSize =Size(1200, 850); //max size
+    appWindow.minSize = Size(500, 600);
+    appWindow.size = Size(500, 900); // initial size
+    appWindow.show();
+  });
 }
