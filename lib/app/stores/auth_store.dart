@@ -29,20 +29,27 @@ class AuthState {
 
 class AuthStateNotifier extends StateNotifier<AuthState> {
   final AuthApiService authApiService = AuthApiService();
-  AuthStateNotifier() : super(AuthState(isAuthenticated: false, user: null));
+
+  AuthStateNotifier() : super(AuthState(isAuthenticated: false, user: null)) {
+    authApiService.getUser().then((user) {
+      if (user != null && user.getId() != null) {
+        state = state.copyWith(isAuthenticated: true, user: user);
+      }
+    });
+  }
+
   changeState(AuthState newState) => state = newState;
 }
 
-
-final authStore = StateNotifierProvider<AuthStateNotifier,AuthState>((ref) => AuthStateNotifier());
+final authStore = StateNotifierProvider<AuthStateNotifier, AuthState>(
+    (ref) => AuthStateNotifier());
 
 void login(WidgetRef ref, LoginFormModel values,
     {Function(bool loggedIn)? onLogin}) async {
-  AccessToken? token =
-      await ref.read(authStore.notifier).authApiService.logIn(
-            email: values.email,
-            password: values.password,
-          );
+  AccessToken? token = await ref.read(authStore.notifier).authApiService.logIn(
+        email: values.email,
+        password: values.password,
+      );
   if (token == null) {
     return;
   }
@@ -53,7 +60,9 @@ void login(WidgetRef ref, LoginFormModel values,
     return;
   }
 
-  ref.read(authStore.notifier).changeState(AuthState(isAuthenticated: true, user: user));
+  ref
+      .read(authStore.notifier)
+      .changeState(AuthState(isAuthenticated: true, user: user));
 
   if (onLogin != null) {
     onLogin(true);
@@ -62,13 +71,12 @@ void login(WidgetRef ref, LoginFormModel values,
 
 Future<void> signup(WidgetRef ref, SignupFormModel values,
     {Function(bool loggedIn)? onLogin}) async {
-  AccessToken? token =
-      await ref.read(authStore.notifier).authApiService.signUp(
-            email: values.email,
-            password: values.password,
-            firstName: values.firstName,
-            lastName: values.lastName,
-          );
+  AccessToken? token = await ref.read(authStore.notifier).authApiService.signUp(
+        email: values.email,
+        password: values.password,
+        firstName: values.firstName,
+        lastName: values.lastName,
+      );
   if (token == null) {
     return;
   }
@@ -79,14 +87,19 @@ Future<void> signup(WidgetRef ref, SignupFormModel values,
   if (user == null) {
     return;
   }
-  ref.read(authStore.notifier).changeState(AuthState(isAuthenticated: true, user: user));
+  ref
+      .read(authStore.notifier)
+      .changeState(AuthState(isAuthenticated: true, user: user));
   if (onLogin != null) {
     onLogin(true);
   }
 }
+
 void logout(BuildContext context, WidgetRef ref) async {
   await NyStorage.delete("accessToken");
-  ref.read(authStore.notifier).changeState(AuthState(isAuthenticated: false, user: null));
+  ref
+      .read(authStore.notifier)
+      .changeState(AuthState(isAuthenticated: false, user: null));
   AutoRouter.of(context).pop();
   AutoRouter.of(context).replace(MyHomeRoute());
 }
